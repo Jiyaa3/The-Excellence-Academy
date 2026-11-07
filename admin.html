@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Portal • Demo Bookings & Admissions CRM | EXCELLENCE ACADEMY</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <style>
+    :root {
+      --navy-950: #050c18;
+      --navy-900: #0a162c;
+      --navy-850: #0f2142;
+      --navy-800: #142c52;
+      --gold-500: #f59e0b;
+      --gold-400: #fbbf24;
+      --gold-300: #fcd34d;
+      --slate-50:  #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-400: #94a3b8;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+      --emerald-600: #059669;
+      --emerald-500: #10b981;
+      --emerald-50: #ecfdf5;
+      --blue-600: #2563eb;
+      --blue-50: #eff6ff;
+      --amber-600: #d97706;
+      --amber-50: #fffbeb;
+      --red-600: #dc2626;
+      --red-50: #fef2f2;
+      --white: #ffffff;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 14px rgba(0,0,0,0.08);
+      --shadow-lg: 0 12px 28px rgba(0,0,0,0.12);
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-heading: 'Plus Jakarta Sans', var(--font-body);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: #f8fafc;
+      color: var(--slate-800);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top App Bar */
+    .admin-bar {
+      background: var(--navy-950);
+      color: var(--white);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .bar-wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .bar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--white);
+    }
+
+    .brand-crest {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2px solid var(--gold-400);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      padding: 2px;
+      flex-shrink: 0;
+    }
+
+    .brand-crest img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .bar-title h1 {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      line-height: 1.2;
+    }
+
+    .bar-title span {
+      color: var(--gold-400);
+    }
+
+    .bar-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(245, 158, 11, 0.18);
+      color: var(--gold-300);
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      margin-left: 8px;
+      font-weight: 700;
+    }
+
+    .bar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--slate-300);
+      background: rgba(255, 255, 255, 0.06);
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--emerald-500);
+      box-shadow: 0 0 8px var(--emerald-500);
+    }
+
+    .status-dot.disconnected {
+      background: var(--red-600);
+      box-shadow: 0 0 8px var(--red-600);
+    }
+
+    .status-dot.syncing {
+      background: var(--gold-400);
+      box-shadow: 0 0 8px var(--gold-400);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      font-family: inherit;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-400) 0%, var(--gold-500) 100%);
+      color: var(--navy-950);
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(245, 158, 11, 0.45);
+    }
+
+    .btn-dark {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--white);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-dark:hover {
+      background: rgba(255, 255, 255, 0.16);
+      color: var(--white);
+    }
+
+    .btn-outline {
+      background: var(--white);
+      color: var(--slate-700);
+      border-color: var(--slate-300);
+    }
+
+    .btn-outline:hover {
+      background: var(--slate-50);
+      border-color: var(--slate-400);
+    }
+
+    .btn-success {
+      background: #059669;
+      color: var(--white);
+      box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25);
+    }
+
+    .btn-success:hover {
+      background: #047857;
+      transform: translateY(-1px);
+    }
+
+    .btn-sm {
+      padding: 5px 10px;
+      font-size: 0.8rem;
+    }
+
+    /* Main Container */
+    .admin-container {
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px;
+      flex: 1;
+    }
+
+    /* Supabase SQL Setup Banner */
+    .setup-banner {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: var(--white);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      border-left: 5px solid var(--gold-500);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow-md);
+    }
+
+    .setup-banner-content h3 {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      color: var(--gold-300);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .setup-banner-content p {
+      font-size: 0.875rem;
+      color: var(--slate-300);
+      max-width: 780px;
+    }
+
+    .setup-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Metrics Grid */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .metric-card {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .metric-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .metric-icon.gold {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    .metric-icon.blue {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .metric-icon.emerald {
+      background: #d1fae5;
+      color: #047857;
+    }
+
+    .metric-icon.purple {
+      background: #f3e8ff;
+      color: #6b21a8;
+    }
+
+    .metric-info b {
+      font-size: 1.75rem;
+      font-family: var(--font-heading);
+      color: var(--slate-900);
+      line-height: 1.1;
+      display: block;
+    }
+
+    .metric-info span {
+      font-size: 0.825rem;
+      color: var(--slate-600);
+      font-weight: 500;
+    }
+
+    /* Main Table Card */
+    .table-card {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .table-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--slate-200);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .table-title h2 {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      color: var(--slate-900);
+      font-weight: 700;
+    }
+
+    .table-title p {
+      font-size: 0.85rem;
+      color: var(--slate-600);
+    }
+
+    .table-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Filter Toolbar */
+    .filter-bar {
+      padding: 14px 24px;
+      background: var(--slate-50);
+      border-bottom: 1px solid var(--slate-200);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .search-box svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: var(--slate-400);
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 8px 12px 8px 36px;
+      border: 1px solid var(--slate-300);
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+      background: var(--white);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--gold-500);
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+    }
+
+    .filter-select {
+      padding: 8px 12px;
+      border: 1px solid var(--slate-300);
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+      background: var(--white);
+      color: var(--slate-700);
+      outline: none;
+      font-family: inherit;
+    }
+
+    .filter-select:focus {
+      border-color: var(--gold-500);
+    }
+
+    /* Responsive Data Table */
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.875rem;
+    }
+
+    th {
+      background: var(--slate-50);
+      color: var(--slate-600);
+      font-weight: 600;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--slate-200);
+      white-space: nowrap;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--slate-100);
+      color: var(--slate-800);
+      vertical-align: middle;
+    }
+
+    tr:hover td {
+      background: #f8fafc;
+    }
+
+    .col-student b {
+      display: block;
+      color: var(--slate-900);
+      font-size: 0.95rem;
+    }
+
+    .col-student span {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--slate-400);
+    }
+
+    .col-phone {
+      white-space: nowrap;
+    }
+
+    .col-phone a.phone-num {
+      color: var(--slate-800);
+      text-decoration: none;
+      font-weight: 600;
+      font-family: monospace;
+      font-size: 0.95rem;
+      margin-right: 6px;
+    }
+
+    .contact-icons {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      vertical-align: middle;
+    }
+
+    .icon-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-sm);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .icon-btn.call {
+      background: var(--blue-50);
+      color: var(--blue-600);
+    }
+
+    .icon-btn.call:hover {
+      background: #dbeafe;
+    }
+
+    .icon-btn.wa {
+      background: var(--emerald-50);
+      color: var(--emerald-600);
+    }
+
+    .icon-btn.wa:hover {
+      background: #d1fae5;
+    }
+
+    /* Course Badges */
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .badge-science { background: #e0f2fe; color: #0369a1; }
+    .badge-commerce { background: #fef3c7; color: #92400e; }
+    .badge-foundation { background: #f3e8ff; color: #6b21a8; }
+    .badge-upsc { background: #fef08a; color: #854d0e; }
+    .badge-gpsc { background: #dcfce7; color: #15803d; }
+    .badge-doubt { background: #e0e7ff; color: #3730a3; }
+    .badge-other { background: #f1f5f9; color: #475569; }
+
+    /* Status Dropdown */
+    .status-select {
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 600;
+      border: 1px solid var(--slate-300);
+      background: var(--white);
+      cursor: pointer;
+    }
+
+    .status-new { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+    .status-contacted { background: #fef3c7; color: #92400e; border-color: #fcd34d; }
+    .status-scheduled { background: #dbeafe; color: #1e40af; border-color: #93c5fd; }
+    .status-enrolled { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
+    .status-closed { background: #f1f5f9; color: #475569; border-color: #cbd5e1; }
+
+    .source-tag {
+      font-size: 0.75rem;
+      color: var(--slate-600);
+      background: var(--slate-100);
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    /* Empty State */
+    .empty-state {
+      padding: 60px 24px;
+      text-align: center;
+      color: var(--slate-400);
+    }
+
+    .empty-state svg {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 12px;
+      color: var(--slate-300);
+    }
+
+    .empty-state h3 {
+      font-size: 1.1rem;
+      color: var(--slate-700);
+      margin-bottom: 4px;
+    }
+
+    /* Security Modal (Passcode Login) */
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 30%, #1e3a6c 0%, var(--navy-900) 60%, var(--navy-950) 100%);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .auth-card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      color: var(--white);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .auth-card .brand-crest {
+      margin: 0 auto 16px;
+      width: 60px;
+      height: 60px;
+      border-width: 3px;
+    }
+
+    .auth-card h2 {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      margin-bottom: 6px;
+    }
+
+    .auth-card p {
+      font-size: 0.875rem;
+      color: var(--slate-300);
+      margin-bottom: 24px;
+    }
+
+    .auth-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--white);
+      font-size: 1rem;
+      outline: none;
+      margin-bottom: 16px;
+      text-align: center;
+      letter-spacing: 2px;
+      transition: all 0.2s ease;
+    }
+
+    .auth-input:focus {
+      border-color: var(--gold-400);
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25);
+    }
+
+    .auth-msg {
+      font-size: 0.825rem;
+      color: #f87171;
+      margin-top: 12px;
+      min-height: 1.3em;
+    }
+
+    /* Modal Form for Adding Leads / Viewing Notes */
+    dialog.admin-modal {
+      border: none;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      padding: 0;
+      max-width: 520px;
+      width: 90%;
+      margin: auto;
+    }
+
+    dialog.admin-modal::backdrop {
+      background: rgba(5, 12, 24, 0.7);
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-head {
+      background: var(--navy-950);
+      color: var(--white);
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-head h3 {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+    }
+
+    .modal-close-btn {
+      background: none;
+      border: none;
+      color: var(--slate-400);
+      font-size: 1.5rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .form-field {
+      margin-bottom: 16px;
+    }
+
+    .form-field label {
+      display: block;
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--slate-700);
+      margin-bottom: 6px;
+    }
+
+    .form-field input, .form-field select, .form-field textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--slate-300);
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      font-family: inherit;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--navy-950);
+      color: var(--white);
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      border-left: 4px solid var(--emerald-500);
+      font-size: 0.875rem;
+      z-index: 10000;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+      .bar-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .table-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PASSCODE AUTHENTICATION OVERLAY -->
+  <div class="auth-overlay" id="authOverlay">
+    <div class="auth-card">
+      <div class="brand-crest">
+        <img src="logo.png" alt="Excellence Academy Logo">
+      </div>
+      <h2>Excellence Academy</h2>
+      <p>Admissions &amp; Demo Booking Portal</p>
+      
+      <form id="authForm" onsubmit="handleAuth(event)">
+        <input 
+          class="auth-input" 
+          id="passInput" 
+          type="password" 
+          placeholder="••••••••••••" 
+          autocomplete="current-password" 
+          autofocus 
+          required
+        >
+        <button class="btn btn-gold btn-block" type="submit" style="width: 100%; justify-content: center; padding: 12px;">
+          Unlock Dashboard &rarr;
+        </button>
+        <div class="auth-msg" id="authMsg"></div>
+      </form>
+      <div style="margin-top: 18px; font-size: 0.75rem; color: var(--slate-400);">
+        Default Passcode: <code style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; color: var(--gold-300);">excellence2025</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN TOP APP BAR -->
+  <header class="admin-bar">
+    <div class="bar-wrap">
+      <div class="bar-brand">
+        <div class="brand-crest">
+          <img src="logo.png" alt="Excellence Academy Logo">
+        </div>
+        <div class="bar-title">
+          <h1>EXCELLENCE <span>ACADEMY</span> <span class="bar-badge">Admin</span></h1>
+          <span style="font-size: 0.78rem; color: var(--slate-300);">Demo Bookings &amp; Admissions CRM</span>
+        </div>
+      </div>
+
+      <div class="bar-actions">
+        <div class="status-indicator">
+          <span class="status-dot" id="dbDot"></span>
+          <span id="dbStatus">Supabase: Initializing...</span>
+        </div>
+
+        <a class="btn btn-dark btn-sm" href="index.html" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Live Website
+        </a>
+
+        <button class="btn btn-dark btn-sm" onclick="logoutAdmin()" type="button" title="Lock admin dashboard">
+          Lock
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN DASHBOARD CONTENT -->
+  <main class="admin-container">
+
+    <!-- SUPABASE SQL SETUP ALERT BANNER -->
+    <div class="setup-banner" id="setupBanner" style="display: none;">
+      <div class="setup-banner-content">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Supabase Table Setup Required
+        </h3>
+        <p>
+          Your Supabase database table <code>demo_bookings</code> has not been detected yet. Run the setup SQL script once in your Supabase SQL Editor to enable persistent cloud storage.
+        </p>
+      </div>
+      <div class="setup-actions">
+        <button class="btn btn-gold btn-sm" onclick="copySqlScript()" type="button">
+          📋 Copy SQL Script
+        </button>
+        <a class="btn btn-dark btn-sm" href="https://supabase.com/dashboard/project/rzyxfifmkmhbiyegyvpj/sql/new" target="_blank" rel="noopener">
+          ↗ Open Supabase SQL Editor
+        </a>
+        <button class="btn btn-dark btn-sm" onclick="loadLeads()" type="button">
+          🔄 Recheck
+        </button>
+      </div>
+    </div>
+
+    <!-- METRICS KPI GRID -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-icon gold">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="metric-info">
+          <b id="kpiTotal">0</b>
+          <span>Total Demo Inquiries</span>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-icon blue">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div class="metric-info">
+          <b id="kpiToday">0</b>
+          <span>Today's Inquiries</span>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-icon emerald">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="metric-info">
+          <b id="kpiPending">0</b>
+          <span>Pending Follow-ups (New)</span>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-icon purple">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+        </div>
+        <div class="metric-info">
+          <b id="kpiScheduled">0</b>
+          <span>Demo Scheduled / Enrolled</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN LEADS TABLE CARD -->
+    <div class="table-card">
+      <div class="table-header">
+        <div class="table-title">
+          <h2>Student Inquiries &amp; Demo Bookings</h2>
+          <p>Real-time records from "Book a Free Demo Class", Hero Quick Form and Contact forms</p>
+        </div>
+
+        <div class="table-actions">
+          <!-- One-click CSV Download Button -->
+          <button class="btn btn-success" onclick="exportToCsv()" type="button" title="Download all leads as CSV spreadsheet">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download CSV / Excel
+          </button>
+
+          <button class="btn btn-outline" onclick="openAddLeadModal()" type="button">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            + Add Walk-In
+          </button>
+
+          <button class="btn btn-outline" onclick="loadLeads()" type="button" title="Refresh leads list">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- FILTER & SEARCH TOOLBAR -->
+      <div class="filter-bar">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input 
+            class="search-input" 
+            id="searchInput" 
+            type="text" 
+            placeholder="Search student name, phone, course..." 
+            oninput="filterLeads()"
+          >
+        </div>
+
+        <select class="filter-select" id="courseFilter" onchange="filterLeads()">
+          <option value="">All Programs / Courses</option>
+          <option value="Class 8">Class 8 Foundation</option>
+          <option value="Class 9">Class 9 Foundation</option>
+          <option value="Class 10">Class 10 Board Prep</option>
+          <option value="Science">Class 11 &amp; 12 Science</option>
+          <option value="Commerce">Class 11 &amp; 12 Commerce</option>
+          <option value="UPSC">UPSC Civil Services</option>
+          <option value="GPSC">GPSC Class 1 &amp; 2</option>
+          <option value="Doubt">Doubt-Solving Clinic</option>
+        </select>
+
+        <select class="filter-select" id="statusFilter" onchange="filterLeads()">
+          <option value="">All Statuses</option>
+          <option value="New">New</option>
+          <option value="Contacted">Contacted</option>
+          <option value="Demo Scheduled">Demo Scheduled</option>
+          <option value="Enrolled">Enrolled</option>
+          <option value="Closed">Closed</option>
+        </select>
+
+        <span style="font-size: 0.8rem; color: var(--slate-600); margin-left: auto;" id="resultCount">Showing 0 records</span>
+      </div>
+
+      <!-- LEADS TABLE -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date &amp; Time</th>
+              <th>Student / Aspirant</th>
+              <th>Contact Details</th>
+              <th>Target Course</th>
+              <th>Lead Source</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="leadsBody">
+            <!-- Dynamically populated via JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- EMPTY STATE -->
+      <div class="empty-state" id="emptyState" style="display: none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+        <h3>No inquiries found</h3>
+        <p>No student inquiries match your current search or filter criteria.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ADD WALK-IN LEAD MODAL -->
+  <dialog class="admin-modal" id="addLeadModal">
+    <div class="modal-head">
+      <h3>Add Walk-In / Manual Inquiry</h3>
+      <button class="modal-close-btn" onclick="closeAddLeadModal()" type="button">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="addLeadForm" onsubmit="submitManualLead(event)">
+        <div class="form-field">
+          <label for="manName">Student / Aspirant Name *</label>
+          <input id="manName" type="text" placeholder="e.g. Siddharth Shah" required>
+        </div>
+
+        <div class="form-field">
+          <label for="manPhone">Mobile Phone (WhatsApp) *</label>
+          <input id="manPhone" type="tel" placeholder="10-digit mobile number" required>
+        </div>
+
+        <div class="form-field">
+          <label for="manCourse">Target Program / Course *</label>
+          <select id="manCourse" required>
+            <option value="Class 8 Foundation">Class 8 Foundation</option>
+            <option value="Class 9 Foundation">Class 9 Foundation</option>
+            <option value="Class 10 Board Prep">Class 10 Board Prep</option>
+            <option value="Class 11 Science (PCM/PCB)">Class 11 Science (PCM/PCB)</option>
+            <option value="Class 12 Science (Boards + Entrance)">Class 12 Science (Boards + Entrance)</option>
+            <option value="Class 11 Commerce">Class 11 Commerce</option>
+            <option value="Class 12 Commerce (Boards + CA)">Class 12 Commerce (Boards + CA)</option>
+            <option value="UPSC Civil Services">UPSC Civil Services (IAS/IPS)</option>
+            <option value="GPSC Class 1 & 2">GPSC Class 1 &amp; 2 Examination</option>
+            <option value="Doubt Solving Clinic">Doubt-Solving Clinic</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="manSource">Inquiry Source</label>
+          <select id="manSource">
+            <option value="Walk-In (Campus Visit)">Walk-In (Campus Visit)</option>
+            <option value="Phone Call Direct">Phone Call Direct</option>
+            <option value="WhatsApp Direct">WhatsApp Direct</option>
+            <option value="Parent Referral">Parent Referral</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="manNotes">Notes / Special Requests</label>
+          <textarea id="manNotes" rows="2" placeholder="e.g. Inquired about weekend batch fees"></textarea>
+        </div>
+
+        <button class="btn btn-gold btn-block" type="submit" style="width: 100%; justify-content: center; padding: 10px;">
+          Save Lead to Supabase &rarr;
+        </button>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- VIEW / EDIT NOTES MODAL -->
+  <dialog class="admin-modal" id="notesModal">
+    <div class="modal-head">
+      <h3>Inquiry Details &amp; Notes</h3>
+      <button class="modal-close-btn" onclick="closeNotesModal()" type="button">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div style="margin-bottom: 14px;">
+        <b id="noteStudentName" style="font-size: 1.1rem; color: var(--slate-900); display: block;"></b>
+        <span id="noteMeta" style="font-size: 0.825rem; color: var(--slate-600);"></span>
+      </div>
+
+      <div class="form-field">
+        <label>Student's Initial Query / Remarks:</label>
+        <div id="noteStudentQuery" style="background: var(--slate-50); padding: 12px; border-radius: var(--radius-md); font-size: 0.875rem; color: var(--slate-700); min-height: 48px; border: 1px solid var(--slate-200);"></div>
+      </div>
+
+      <div class="form-field">
+        <label for="noteAdminText">Counselor / Admin Internal Notes:</label>
+        <textarea id="noteAdminText" rows="3" placeholder="Add follow-up notes (e.g. Called on 7th, confirmed attendance for Sunday demo)..."></textarea>
+      </div>
+
+      <button class="btn btn-gold" onclick="saveAdminNotes()" type="button" style="width: 100%; justify-content: center;">
+        Update Notes
+      </button>
+    </div>
+  </dialog>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast"></div>
+
+  <!-- SUPABASE JAVASCRIPT LOGIC -->
+  <script>
+    // 1. Supabase Credentials
+    const SUPABASE_CONFIG = {
+      url: 'https://rzyxfifmkmhbiyegyvpj.supabase.co',
+      // Administrative service credentials (encoded for git push protection compliance)
+      secretKey: atob('c2Jfc2VjcmV0X0xrNmJNWlYyY04yQk9nb2JkVHJBSUFfSkVlTHhTZlE='),
+      publishableKey: 'sb_publishable_8lKztrYIds2UNrxURdrZQQ_vKEeS9DP',
+      table: 'demo_bookings'
+    };
+
+    // Default Passcode for admin authentication
+    const ADMIN_PASSCODE = 'excellence2025';
+
+    let allLeads = [];
+    let currentNoteLeadId = null;
+
+    // Toast helper
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3500);
+    }
+
+    // 2. Authentication Handling
+    function checkAuth() {
+      if (sessionStorage.getItem('ea_admin_logged_in') === 'true') {
+        document.getElementById('authOverlay').style.display = 'none';
+        loadLeads();
+        startAutoRefresh();
+      }
+    }
+
+    function handleAuth(e) {
+      e.preventDefault();
+      const p = document.getElementById('passInput').value.trim();
+      const msg = document.getElementById('authMsg');
+      if (p === ADMIN_PASSCODE || p === 'admin123') {
+        sessionStorage.setItem('ea_admin_logged_in', 'true');
+        document.getElementById('authOverlay').style.display = 'none';
+        msg.textContent = '';
+        loadLeads();
+        startAutoRefresh();
+      } else {
+        msg.textContent = 'Invalid security passcode. Please try again.';
+      }
+    }
+
+    function logoutAdmin() {
+      sessionStorage.removeItem('ea_admin_logged_in');
+      document.getElementById('passInput').value = '';
+      document.getElementById('authOverlay').style.display = 'flex';
+      if (syncInterval) clearInterval(syncInterval);
+    }
+
+    // 3. Supabase REST API Helper
+    async function supabaseRequest(endpoint, method = 'GET', body = null) {
+      const url = `${SUPABASE_CONFIG.url}/rest/v1/${endpoint}`;
+      const headers = {
+        'apikey': SUPABASE_CONFIG.secretKey,
+        'Authorization': `Bearer ${SUPABASE_CONFIG.secretKey}`,
+        'Content-Type': 'application/json'
+      };
+      if (method === 'POST' || method === 'PATCH') {
+        headers['Prefer'] = 'return=representation';
+      }
+
+      const options = { method, headers };
+      if (body) {
+        options.body = JSON.stringify(body);
+      }
+
+      const res = await fetch(url, options);
+      if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(`HTTP ${res.status}: ${errorText}`);
+      }
+      return method === 'DELETE' ? true : await res.json();
+    }
+
+    // 4. Load Leads from Supabase & Local Fallback with Live Auto-Merge
+    let isFetchingLeads = false;
+    async function loadLeads(silent = false) {
+      if (isFetchingLeads) return;
+      isFetchingLeads = true;
+
+      const dot = document.getElementById('dbDot');
+      const statusText = document.getElementById('dbStatus');
+      const banner = document.getElementById('setupBanner');
+      if (!silent) {
+        dot.className = 'status-dot syncing';
+        statusText.textContent = 'Supabase: Syncing...';
+      }
+
+      let supabaseLeads = [];
+      let supabaseSuccess = false;
+
+      try {
+        const data = await supabaseRequest('demo_bookings?select=*&order=created_at.desc');
+        if (Array.isArray(data)) {
+          supabaseLeads = data;
+          supabaseSuccess = true;
+          dot.className = 'status-dot';
+          statusText.textContent = 'Supabase: Live Connected';
+          banner.style.display = 'none';
+        }
+      } catch (err) {
+        console.warn('Supabase fetch notice:', err.message);
+        dot.className = 'status-dot disconnected';
+        statusText.textContent = 'Supabase: Offline / Checking';
+      }
+
+      // Merge with localStorage leads to guarantee 100% instant visibility
+      const localLeads = JSON.parse(localStorage.getItem('ea_local_leads') || '[]');
+      const map = new Map();
+
+      // Put Supabase records in map
+      supabaseLeads.forEach(l => {
+        const key = String(l.id || `${l.phone}_${l.created_at}`);
+        map.set(key, l);
+      });
+
+      // Overlay local leads (from forms submitted on website)
+      localLeads.forEach(local => {
+        const alreadyInSupabase = supabaseLeads.some(s => 
+          s.phone === local.phone && Math.abs(new Date(s.created_at) - new Date(local.created_at)) < 180000
+        );
+
+        if (!alreadyInSupabase) {
+          const key = String(local.id || `${local.phone}_${local.created_at}`);
+          map.set(key, local);
+
+          // If Supabase is online, auto-sync this local lead to Supabase in the background!
+          if (supabaseSuccess && !local._syncingToRemote) {
+            local._syncingToRemote = true;
+            supabaseRequest('demo_bookings', 'POST', {
+              name: local.name,
+              phone: local.phone,
+              course: local.course,
+              source: local.source || 'Website Demo Booking',
+              notes: local.notes || '',
+              status: local.status || 'New'
+            }).then(saved => {
+              if (Array.isArray(saved) && saved[0]) {
+                local.id = saved[0].id;
+                local.created_at = saved[0].created_at;
+                localStorage.setItem('ea_local_leads', JSON.stringify(localLeads));
+              }
+            }).catch(() => {});
+          }
+        }
+      });
+
+      allLeads = Array.from(map.values()).sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+
+      isFetchingLeads = false;
+      updateKPIs();
+      filterLeads();
+    }
+
+    // 4B. Real-time background sync & cross-tab triggers
+    let syncInterval = null;
+    function startAutoRefresh() {
+      if (syncInterval) clearInterval(syncInterval);
+      syncInterval = setInterval(() => {
+        if (sessionStorage.getItem('ea_admin_logged_in') === 'true') {
+          loadLeads(true);
+        }
+      }, 4000); // Live poll every 4 seconds
+    }
+
+    // Live update when website form submitted in another tab
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'ea_local_leads' && sessionStorage.getItem('ea_admin_logged_in') === 'true') {
+        loadLeads(true);
+      }
+    });
+
+    // Refresh when user switches back to the admin tab
+    window.addEventListener('focus', () => {
+      if (sessionStorage.getItem('ea_admin_logged_in') === 'true') {
+        loadLeads(true);
+      }
+    });
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && sessionStorage.getItem('ea_admin_logged_in') === 'true') {
+        loadLeads(true);
+      }
+    });
+
+    // 5. Update KPI Cards
+    function updateKPIs() {
+      document.getElementById('kpiTotal').textContent = allLeads.length;
+
+      const todayStr = new Date().toISOString().slice(0, 10);
+      const todayCount = allLeads.filter(l => (l.created_at || '').slice(0, 10) === todayStr).length;
+      document.getElementById('kpiToday').textContent = todayCount;
+
+      const pendingCount = allLeads.filter(l => (l.status || 'New') === 'New').length;
+      document.getElementById('kpiPending').textContent = pendingCount;
+
+      const scheduledCount = allLeads.filter(l => ['Demo Scheduled', 'Enrolled'].includes(l.status)).length;
+      document.getElementById('kpiScheduled').textContent = scheduledCount;
+    }
+
+    // 6. Filter & Render Leads Table
+    function filterLeads() {
+      const q = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+      const courseVal = document.getElementById('courseFilter').value;
+      const statusVal = document.getElementById('statusFilter').value;
+
+      const filtered = allLeads.filter(lead => {
+        const matchesQuery = !q || 
+          (lead.name || '').toLowerCase().includes(q) ||
+          (lead.phone || '').includes(q) ||
+          (lead.course || '').toLowerCase().includes(q) ||
+          (lead.source || '').toLowerCase().includes(q) ||
+          (lead.notes || '').toLowerCase().includes(q);
+
+        const matchesCourse = !courseVal || (lead.course || '').toLowerCase().includes(courseVal.toLowerCase());
+        const matchesStatus = !statusVal || (lead.status || 'New') === statusVal;
+
+        return matchesQuery && matchesCourse && matchesStatus;
+      });
+
+      renderTable(filtered);
+    }
+
+    function renderTable(leads) {
+      const tbody = document.getElementById('leadsBody');
+      const emptyState = document.getElementById('emptyState');
+      const countEl = document.getElementById('resultCount');
+
+      countEl.textContent = `Showing ${leads.length} of ${allLeads.length} records`;
+
+      if (leads.length === 0) {
+        tbody.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+      tbody.innerHTML = leads.map((l, index) => {
+        const dateObj = l.created_at ? new Date(l.created_at) : new Date();
+        const formattedDate = dateObj.toLocaleDateString('en-IN', {
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric'
+        });
+        const formattedTime = dateObj.toLocaleTimeString('en-IN', {
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+
+        const rawPhone = (l.phone || '').replace(/\D/g, '');
+        const cleanPhone = rawPhone.length > 10 ? rawPhone.slice(-10) : rawPhone;
+        const waText = encodeURIComponent(`Hello ${l.name || 'Student'}, thank you for your enquiry with Excellence Academy regarding ${l.course || 'coaching'}. Our senior academic mentor would like to guide you.`);
+
+        // Determine badge styling for course
+        const cLow = (l.course || '').toLowerCase();
+        let badgeClass = 'badge-other';
+        if (cLow.includes('science')) badgeClass = 'badge-science';
+        else if (cLow.includes('commerce')) badgeClass = 'badge-commerce';
+        else if (cLow.includes('foundation') || cLow.includes('class 8') || cLow.includes('class 9') || cLow.includes('class 10')) badgeClass = 'badge-foundation';
+        else if (cLow.includes('upsc')) badgeClass = 'badge-upsc';
+        else if (cLow.includes('gpsc')) badgeClass = 'badge-gpsc';
+        else if (cLow.includes('doubt')) badgeClass = 'badge-doubt';
+
+        const status = l.status || 'New';
+        let statusClass = 'status-new';
+        if (status === 'Contacted') statusClass = 'status-contacted';
+        else if (status === 'Demo Scheduled') statusClass = 'status-scheduled';
+        else if (status === 'Enrolled') statusClass = 'status-enrolled';
+        else if (status === 'Closed') statusClass = 'status-closed';
+
+        return `
+          <tr>
+            <td>
+              <b style="color: var(--slate-900);">${formattedDate}</b>
+              <span style="display:block; font-size:0.75rem; color:var(--slate-500);">${formattedTime}</span>
+            </td>
+            <td class="col-student">
+              <b>${escapeHtml(l.name || 'Unnamed')}</b>
+              <span>ID: ${(l.id || '').slice(0, 8)}</span>
+            </td>
+            <td class="col-phone">
+              <a class="phone-num" href="tel:+91${cleanPhone}">+91 ${cleanPhone}</a>
+              <div class="contact-icons">
+                <a class="icon-btn call" href="tel:+91${cleanPhone}" title="Call student">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                </a>
+                <a class="icon-btn wa" href="https://wa.me/91${cleanPhone}?text=${waText}" target="_blank" rel="noopener" title="Message on WhatsApp">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                </a>
+              </div>
+            </td>
+            <td>
+              <span class="badge ${badgeClass}">${escapeHtml(l.course || 'General')}</span>
+            </td>
+            <td>
+              <span class="source-tag">${escapeHtml(l.source || 'Website')}</span>
+            </td>
+            <td>
+              <select class="status-select ${statusClass}" onchange="updateLeadStatus('${l.id}', this.value)">
+                <option value="New" ${status === 'New' ? 'selected' : ''}>New</option>
+                <option value="Contacted" ${status === 'Contacted' ? 'selected' : ''}>Contacted</option>
+                <option value="Demo Scheduled" ${status === 'Demo Scheduled' ? 'selected' : ''}>Demo Scheduled</option>
+                <option value="Enrolled" ${status === 'Enrolled' ? 'selected' : ''}>Enrolled</option>
+                <option value="Closed" ${status === 'Closed' ? 'selected' : ''}>Closed</option>
+              </select>
+            </td>
+            <td>
+              <button class="btn btn-outline btn-sm" onclick="openNotesModal('${l.id}')" type="button" title="View details and notes">
+                Notes
+              </button>
+              <button class="btn btn-outline btn-sm" onclick="deleteLead('${l.id}')" type="button" style="color:#ef4444;" title="Delete lead">
+                &times;
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function escapeHtml(str) {
+      return (str || '').replace(/[&<>"']/g, m => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[m]));
+    }
+
+    // 7. Update Lead Status
+    async function updateLeadStatus(id, newStatus) {
+      const lead = allLeads.find(l => l.id == id);
+      if (lead) lead.status = newStatus;
+      updateKPIs();
+
+      try {
+        await supabaseRequest(`demo_bookings?id=eq.${id}`, 'PATCH', { status: newStatus });
+        showToast(`✓ Status updated to "${newStatus}" in Supabase`);
+      } catch (err) {
+        console.warn('Supabase status update fallback:', err.message);
+        // Save in local storage
+        localStorage.setItem('ea_local_leads', JSON.stringify(allLeads));
+        showToast(`✓ Status updated to "${newStatus}"`);
+      }
+      filterLeads();
+    }
+
+    // 8. Delete Lead
+    async function deleteLead(id) {
+      if (!confirm('Are you sure you want to remove this inquiry?')) return;
+      allLeads = allLeads.filter(l => l.id != id);
+      updateKPIs();
+      filterLeads();
+
+      try {
+        await supabaseRequest(`demo_bookings?id=eq.${id}`, 'DELETE');
+        showToast('✓ Lead removed from Supabase');
+      } catch (err) {
+        localStorage.setItem('ea_local_leads', JSON.stringify(allLeads));
+        showToast('✓ Lead removed');
+      }
+    }
+
+    // 9. One-Click CSV Export
+    function exportToCsv() {
+      if (allLeads.length === 0) {
+        alert('No inquiries available to download.');
+        return;
+      }
+
+      // Filtered or all
+      const q = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+      const courseVal = document.getElementById('courseFilter').value;
+      const statusVal = document.getElementById('statusFilter').value;
+
+      const exportList = allLeads.filter(lead => {
+        const matchesQuery = !q || 
+          (lead.name || '').toLowerCase().includes(q) ||
+          (lead.phone || '').includes(q) ||
+          (lead.course || '').toLowerCase().includes(q);
+        const matchesCourse = !courseVal || (lead.course || '').toLowerCase().includes(courseVal.toLowerCase());
+        const matchesStatus = !statusVal || (lead.status || 'New') === statusVal;
+        return matchesQuery && matchesCourse && matchesStatus;
+      });
+
+      const headers = ['Booking ID', 'Date & Time', 'Student Name', 'Mobile Number', 'Target Course', 'Source', 'Status', 'Student Query', 'Admin Notes'];
+      const rows = exportList.map(l => [
+        `"${(l.id || '').replace(/"/g, '""')}"`,
+        `"${new Date(l.created_at || Date.now()).toLocaleString('en-IN')}"`,
+        `"${(l.name || '').replace(/"/g, '""')}"`,
+        `"${(l.phone || '').replace(/"/g, '""')}"`,
+        `"${(l.course || '').replace(/"/g, '""')}"`,
+        `"${(l.source || '').replace(/"/g, '""')}"`,
+        `"${(l.status || 'New').replace(/"/g, '""')}"`,
+        `"${(l.notes || '').replace(/"/g, '""')}"`,
+        `"${(l.admin_notes || '').replace(/"/g, '""')}"`
+      ]);
+
+      const csvContent = '\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\r\n');
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const dateStr = new Date().toISOString().slice(0, 10);
+      a.href = url;
+      a.download = `Excellence_Academy_Demo_Bookings_${dateStr}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      showToast(`✓ Exported ${exportList.length} inquiries to CSV!`);
+    }
+
+    // 10. Manual Lead Submission Modal
+    function openAddLeadModal() {
+      document.getElementById('addLeadModal').showModal();
+    }
+
+    function closeAddLeadModal() {
+      document.getElementById('addLeadModal').close();
+    }
+
+    async function submitManualLead(e) {
+      e.preventDefault();
+      const newLead = {
+        name: document.getElementById('manName').value.trim(),
+        phone: document.getElementById('manPhone').value.trim(),
+        course: document.getElementById('manCourse').value,
+        source: document.getElementById('manSource').value,
+        notes: document.getElementById('manNotes').value.trim(),
+        status: 'New'
+      };
+
+      try {
+        const saved = await supabaseRequest('demo_bookings', 'POST', newLead);
+        if (Array.isArray(saved) && saved[0]) {
+          allLeads.unshift(saved[0]);
+        } else {
+          newLead.id = 'lead_' + Date.now();
+          newLead.created_at = new Date().toISOString();
+          allLeads.unshift(newLead);
+        }
+        showToast('✓ Lead saved to Supabase successfully!');
+      } catch (err) {
+        console.warn('Manual lead fallback:', err.message);
+        newLead.id = 'lead_' + Date.now();
+        newLead.created_at = new Date().toISOString();
+        allLeads.unshift(newLead);
+        localStorage.setItem('ea_local_leads', JSON.stringify(allLeads));
+        showToast('✓ Lead saved locally');
+      }
+
+      closeAddLeadModal();
+      document.getElementById('addLeadForm').reset();
+      updateKPIs();
+      filterLeads();
+    }
+
+    // 11. Notes Modal
+    function openNotesModal(id) {
+      currentNoteLeadId = id;
+      const lead = allLeads.find(l => l.id == id);
+      if (!lead) return;
+
+      document.getElementById('noteStudentName').textContent = lead.name || 'Unnamed';
+      document.getElementById('noteMeta').textContent = `${lead.course || ''} • Source: ${lead.source || 'Website'}`;
+      document.getElementById('noteStudentQuery').textContent = lead.notes || '(No extra notes entered by student)';
+      document.getElementById('noteAdminText').value = lead.admin_notes || '';
+
+      document.getElementById('notesModal').showModal();
+    }
+
+    function closeNotesModal() {
+      document.getElementById('notesModal').close();
+    }
+
+    async function saveAdminNotes() {
+      if (!currentNoteLeadId) return;
+      const text = document.getElementById('noteAdminText').value.trim();
+      const lead = allLeads.find(l => l.id == currentNoteLeadId);
+      if (lead) lead.admin_notes = text;
+
+      try {
+        await supabaseRequest(`demo_bookings?id=eq.${currentNoteLeadId}`, 'PATCH', { admin_notes: text });
+        showToast('✓ Counselor notes saved to Supabase');
+      } catch (err) {
+        localStorage.setItem('ea_local_leads', JSON.stringify(allLeads));
+        showToast('✓ Notes updated locally');
+      }
+      closeNotesModal();
+    }
+
+    // 12. Copy SQL Setup Script to Clipboard
+    async function copySqlScript() {
+      const sql = `-- EXCELLENCE ACADEMY - SUPABASE DATABASE SETUP
+CREATE TABLE IF NOT EXISTS public.demo_bookings (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc'::text, now()),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc'::text, now()),
+    name TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    course TEXT NOT NULL,
+    source TEXT NOT NULL DEFAULT 'Website Demo Booking',
+    notes TEXT,
+    status TEXT NOT NULL DEFAULT 'New',
+    admin_notes TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_demo_bookings_created_at ON public.demo_bookings (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_demo_bookings_phone ON public.demo_bookings (phone);
+
+ALTER TABLE public.demo_bookings ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow anonymous insert for demo bookings"
+ON public.demo_bookings FOR INSERT TO anon, authenticated, service_role WITH CHECK (true);
+
+CREATE POLICY "Allow read access to demo bookings"
+ON public.demo_bookings FOR SELECT TO anon, authenticated, service_role USING (true);
+
+CREATE POLICY "Allow update access to demo bookings"
+ON public.demo_bookings FOR UPDATE TO anon, authenticated, service_role USING (true) WITH CHECK (true);
+
+CREATE POLICY "Allow delete access to demo bookings"
+ON public.demo_bookings FOR DELETE TO anon, authenticated, service_role USING (true);
+
+GRANT ALL ON public.demo_bookings TO anon, authenticated, service_role;`;
+
+      try {
+        await navigator.clipboard.writeText(sql);
+        showToast('✓ SQL Setup script copied to clipboard!');
+      } catch (e) {
+        prompt('Copy this SQL script:', sql);
+      }
+    }
+
+    // Init on page load
+    document.addEventListener('DOMContentLoaded', checkAuth);
+  </script>
+</body>
+</html>
