@@ -1,5 +1,5 @@
 /* ==========================================================================
-   EXCELLENCE ACADEMY - INTERACTIVE SCRIPT
+   THE EXCELLENCE ACADEMY - INTERACTIVE SCRIPT
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', function () {

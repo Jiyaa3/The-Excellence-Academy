@@ -1,6 +1,6 @@
-# EXCELLENCE ACADEMY
+# THE EXCELLENCE ACADEMY
 
-Official Website & Admissions CRM Portal for **Excellence Academy** (Gandhinagar, Gujarat).
+Official Website & Admissions CRM Portal for **The Excellence Academy** (Gandhinagar, Gujarat).
 
 Built for Academic & Civil Services Excellence:
 - **School & Foundation**: Classes 8 to 10 (GSEB, CBSE, ICSE)
@@ -50,4 +50,4 @@ Open `admin.html` in any browser or click the **Staff Portal** link in the foote
 
 ---
 
-© Excellence Academy. All rights reserved.
+© The Excellence Academy. All rights reserved.

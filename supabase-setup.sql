@@ -1,5 +1,5 @@
 -- ============================================================================
--- EXCELLENCE ACADEMY - SUPABASE DATABASE SETUP SCRIPT
+-- THE EXCELLENCE ACADEMY - SUPABASE DATABASE SETUP SCRIPT
 -- Project: excellenceacademy.study@gmail.com's Project (ID: rzyxfifmkmhbiyegyvpj)
 -- Target Table: demo_bookings
 -- ============================================================================
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS public.demo_bookings (
 );
 
 -- 2. Add comment on table
-COMMENT ON TABLE public.demo_bookings IS 'Stores demo class bookings and admissions inquiries from Excellence Academy website';
+COMMENT ON TABLE public.demo_bookings IS 'Stores demo class bookings and admissions inquiries from The Excellence Academy website';
 
 -- 3. Create performance indexes
 CREATE INDEX IF NOT EXISTS idx_demo_bookings_created_at ON public.demo_bookings (created_at DESC);

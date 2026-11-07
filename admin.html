@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin Portal • Demo Bookings & Admissions CRM | EXCELLENCE ACADEMY</title>
+  <title>Admin Portal • Demo Bookings & Admissions CRM | THE EXCELLENCE ACADEMY</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -800,9 +800,9 @@
   <div class="auth-overlay" id="authOverlay">
     <div class="auth-card">
       <div class="brand-crest">
-        <img src="logo.png" alt="Excellence Academy Logo">
+        <img src="logo.png" alt="The Excellence Academy Logo">
       </div>
-      <h2>Excellence Academy</h2>
+      <h2>The Excellence Academy</h2>
       <p>Admissions &amp; Demo Booking Portal</p>
       
       <form id="authForm" onsubmit="handleAuth(event)">
@@ -831,10 +831,10 @@
     <div class="bar-wrap">
       <div class="bar-brand">
         <div class="brand-crest">
-          <img src="logo.png" alt="Excellence Academy Logo">
+          <img src="logo.png" alt="The Excellence Academy Logo">
         </div>
         <div class="bar-title">
-          <h1>EXCELLENCE <span>ACADEMY</span> <span class="bar-badge">Admin</span></h1>
+          <h1>THE EXCELLENCE <span>ACADEMY</span> <span class="bar-badge">Admin</span></h1>
           <span style="font-size: 0.78rem; color: var(--slate-300);">Demo Bookings &amp; Admissions CRM</span>
         </div>
       </div>
@@ -1364,7 +1364,7 @@
 
         const rawPhone = (l.phone || '').replace(/\D/g, '');
         const cleanPhone = rawPhone.length > 10 ? rawPhone.slice(-10) : rawPhone;
-        const waText = encodeURIComponent(`Hello ${l.name || 'Student'}, thank you for your enquiry with Excellence Academy regarding ${l.course || 'coaching'}. Our senior academic mentor would like to guide you.`);
+        const waText = encodeURIComponent(`Hello ${l.name || 'Student'}, thank you for your enquiry with The Excellence Academy regarding ${l.course || 'coaching'}. Our senior academic mentor would like to guide you.`);
 
         // Determine badge styling for course
         const cLow = (l.course || '').toLowerCase();
@@ -1517,7 +1517,7 @@
       const a = document.createElement('a');
       const dateStr = new Date().toISOString().slice(0, 10);
       a.href = url;
-      a.download = `Excellence_Academy_Demo_Bookings_${dateStr}.csv`;
+      a.download = `The_Excellence_Academy_Demo_Bookings_${dateStr}.csv`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -1607,7 +1607,7 @@
 
     // 12. Copy SQL Setup Script to Clipboard
     async function copySqlScript() {
-      const sql = `-- EXCELLENCE ACADEMY - SUPABASE DATABASE SETUP
+      const sql = `-- THE EXCELLENCE ACADEMY - SUPABASE DATABASE SETUP
 CREATE TABLE IF NOT EXISTS public.demo_bookings (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     created_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc'::text, now()),
