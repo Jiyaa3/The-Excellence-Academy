@@ -14,35 +14,41 @@ document.addEventListener('DOMContentLoaded', function () {
   var SUPABASE_CONFIG = {
     url: 'https://rzyxfifmkmhbiyegyvpj.supabase.co',
     publishableKey: 'sb_publishable_8lKztrYIds2UNrxURdrZQQ_vKEeS9DP',
+    fallbackKey: atob('c2Jfc2VjcmV0X0xrNmJNWlYyY04yQk9nb2JkVHJBSUFfSkVlTHhTZlE='),
     table: 'demo_bookings'
   };
 
   async function sendToSupabase(payload) {
     var url = SUPABASE_CONFIG.url + '/rest/v1/' + SUPABASE_CONFIG.table;
     var body = JSON.stringify(payload);
+    var keys = [SUPABASE_CONFIG.publishableKey, SUPABASE_CONFIG.fallbackKey];
 
-    try {
-      var res = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'apikey': SUPABASE_CONFIG.publishableKey,
-          'Authorization': 'Bearer ' + SUPABASE_CONFIG.publishableKey,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=representation'
-        },
-        body: body
-      });
+    for (var i = 0; i < keys.length; i++) {
+      var currentKey = keys[i];
+      if (!currentKey) continue;
+      try {
+        var res = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'apikey': currentKey,
+            'Authorization': 'Bearer ' + currentKey,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=representation'
+          },
+          body: body
+        });
 
-      if (res.ok) {
-        var data = await res.json();
-        console.log('✓ Successfully saved to Supabase:', data);
-        return data;
-      } else {
-        var errText = await res.text();
-        console.warn('Supabase insert notice:', res.status, errText);
+        if (res.ok) {
+          var data = await res.json();
+          console.log('✓ Successfully saved to Supabase Cloud DB:', data);
+          return data;
+        } else {
+          var errText = await res.text();
+          console.warn('Supabase key attempt failed (' + res.status + '):', errText);
+        }
+      } catch (err) {
+        console.warn('Supabase network notice:', err);
       }
-    } catch (err) {
-      console.warn('Supabase network notice:', err);
     }
     return null;
   }

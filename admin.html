@@ -845,6 +845,11 @@
           <span id="dbStatus">Supabase: Initializing...</span>
         </div>
 
+        <button class="btn btn-dark btn-sm" onclick="loadLeads(false)" type="button" title="Force Sync with Cloud Database">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          Sync Now
+        </button>
+
         <a class="btn btn-dark btn-sm" href="index.html" target="_blank" rel="noopener">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           Live Website
@@ -1163,29 +1168,43 @@
       if (syncInterval) clearInterval(syncInterval);
     }
 
-    // 3. Supabase REST API Helper
+    // 3. Supabase REST API Helper with Multi-Key Resilience
     async function supabaseRequest(endpoint, method = 'GET', body = null) {
-      const url = `${SUPABASE_CONFIG.url}/rest/v1/${endpoint}`;
-      const headers = {
-        'apikey': SUPABASE_CONFIG.secretKey,
-        'Authorization': `Bearer ${SUPABASE_CONFIG.secretKey}`,
-        'Content-Type': 'application/json'
-      };
-      if (method === 'POST' || method === 'PATCH') {
-        headers['Prefer'] = 'return=representation';
-      }
+      const keysToTry = [
+        SUPABASE_CONFIG.publishableKey,
+        SUPABASE_CONFIG.secretKey
+      ];
 
-      const options = { method, headers };
-      if (body) {
-        options.body = JSON.stringify(body);
-      }
+      let lastError = null;
+      for (const key of keysToTry) {
+        if (!key) continue;
+        try {
+          const url = `${SUPABASE_CONFIG.url}/rest/v1/${endpoint}`;
+          const headers = {
+            'apikey': key,
+            'Authorization': `Bearer ${key}`,
+            'Content-Type': 'application/json'
+          };
+          if (method === 'POST' || method === 'PATCH') {
+            headers['Prefer'] = 'return=representation';
+          }
 
-      const res = await fetch(url, options);
-      if (!res.ok) {
-        const errorText = await res.text();
-        throw new Error(`HTTP ${res.status}: ${errorText}`);
+          const options = { method, headers };
+          if (body) {
+            options.body = JSON.stringify(body);
+          }
+
+          const res = await fetch(url, options);
+          if (res.ok) {
+            return method === 'DELETE' ? true : await res.json();
+          }
+          const errorText = await res.text();
+          lastError = new Error(`HTTP ${res.status}: ${errorText}`);
+        } catch (netErr) {
+          lastError = netErr;
+        }
       }
-      return method === 'DELETE' ? true : await res.json();
+      throw lastError || new Error('Network connection failed');
     }
 
     // 4. Load Leads from Supabase & Local Fallback with Live Auto-Merge
@@ -1211,13 +1230,19 @@
           supabaseLeads = data;
           supabaseSuccess = true;
           dot.className = 'status-dot';
-          statusText.textContent = 'Supabase: Live Connected';
+          statusText.textContent = `Supabase: Connected (${data.length} cloud records)`;
           banner.style.display = 'none';
+          if (!silent) {
+            showToast(`✓ Synced ${data.length} inquiries from cloud database`);
+          }
         }
       } catch (err) {
         console.warn('Supabase fetch notice:', err.message);
         dot.className = 'status-dot disconnected';
-        statusText.textContent = 'Supabase: Offline / Checking';
+        statusText.textContent = `Supabase Error: ${err.message || 'Offline'}`;
+        if (!silent) {
+          showToast(`⚠️ Supabase connection issue: ${err.message || 'Check network'}`);
+        }
       }
 
       // Merge with localStorage leads to guarantee 100% instant visibility
